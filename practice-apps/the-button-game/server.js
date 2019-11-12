@@ -17,7 +17,7 @@ function parseCookies (request) {
 }
 
 var server = http.createServer(function (request, response) {
-    if (request.method === 'GET') {
+     if (request.method === 'GET') {
         if (request.url === '/index.html') {
             fs.readFile('index.html', function (err, data) {
                 response.writeHead(200, { 'Content-Type': 'text/html' });
@@ -33,22 +33,25 @@ var server = http.createServer(function (request, response) {
             });
         }
     }
-    else if (request.method === 'POST') {
-        
-        var cookies = parseCookies(request);
-        
-        if (request.url === '/clickme') {
-            var number = cookies['click_number']
+    else {
+       if (request.method === 'POST') {
+            var cookies = parseCookies(request);
+            if (request.url === '/clickme') {
+                var number = cookies['click_number']
+                if (number == undefined) {
+                    number = 0;
+                }
 
-            response.writeHead(200, {
-                'Set-Cookie': 'click_number' + number,
-                'Content-Type': 'text/plain'
-            });
+                response.writeHead(200, {
+                    'Set-Cookie': 'click_number=' + number,
+                    'Content-Type': 'text/plain'
+                });
 
-            new_html = "Worked!"
-            response.write(new_html);
-            response.end();
-        } 
+                new_html = "Worked!"
+                response.write(new_html);
+                response.end();
+            } 
+        }
     }
 
 
