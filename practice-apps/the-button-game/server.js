@@ -4,6 +4,18 @@ var fs = require('fs');
 //2.
 //3.
 
+function parseCookies (request) {
+    var list = {},
+        rc = request.headers.cookie;
+
+    rc && rc.split(';').forEach(function( cookie ) {
+        var parts = cookie.split('=');
+        list[parts.shift().trim()] = decodeURI(parts.join('='));
+    });
+
+    return list;
+}
+
 var server = http.createServer(function (request, response) {
     if (request.method === 'GET') {
         if (request.url === '/index.html') {
@@ -20,6 +32,23 @@ var server = http.createServer(function (request, response) {
                 response.end();
             });
         }
+    }
+    else if (request.method === 'POST') {
+        
+        var cookies = parseCookies(request);
+        
+        if (request.url === '/clickme') {
+            var number = cookies['click_number']
+
+            response.writeHead(200, {
+                'Set-Cookie': 'click_number' + number,
+                'Content-Type': 'text/plain'
+            });
+
+            new_html = "Worked!"
+            response.write(new_html);
+            response.end();
+        } 
     }
 
 

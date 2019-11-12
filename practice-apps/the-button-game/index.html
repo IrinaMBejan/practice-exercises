@@ -35,7 +35,7 @@
             <p class="controls__timer">00:05</p>
         </div>
         <div class="game-area">
-            <button> Click me</button>
+            <button onclick="submitClick()"> Click me</button>
         </div>
     </main>
     <footer>
@@ -43,7 +43,11 @@
     </footer>
 
     <script>
-    
+        function submitClick() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", '/clickme', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+        }
     </script>
 </body>
 
