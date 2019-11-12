@@ -7,9 +7,12 @@
         "url": "https://iampava.com"
     },
     "scripts": {
-        "start": "live-server --port=8080 --no-browser"
+        "start": "nodemon server.js"
     },
     "devDependencies": {
         "live-server": "^1.2.1"
+    },
+    "dependencies": {
+        "nodemon": "^1.19.4"
     }
 }
